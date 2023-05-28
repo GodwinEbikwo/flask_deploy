@@ -9,6 +9,8 @@ from flask import Flask, render_template, redirect, request, session
 # load the env file
 load_dotenv()
 
+env = os.getenv("ENVIRONMENT")
+
 # initialise the flask app
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -28,7 +30,12 @@ client_secret = os.getenv("CLIENT_SECRET")
 # Scope for the required permissions
 scope = "user-library-read user-top-read user-read-recently-played"
 
-redirect_uri = "http://localhost:5000/callback"
+
+# Set the redirect URI based on the environment
+if env == "dev":
+    redirect_uri = "http://localhost:5000/callback"
+else:
+    redirect_uri = "https://spotifyanalytics.onrender.com/callback"
 
 # Create SpotifyOAuth instance
 sp_oauth = SpotifyOAuth(
