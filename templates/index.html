@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spotify_analytics</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul class="navbar-list">
+        <li class="navbar-item"><a href="#">UserName</a></li>
+        <li class="navbar-item"><a href="#">Picture</a></li>
+        <li class="navbar-item"><a href="#">Logout</a></li>
+      </ul>
+    </nav>
+    <div class="root_body">
+      <div class="root_inner">
+        <a class="btn" href="{{ auth_url }}"> login with spotify </a>
+        <div class="container">
+          <div>Hello World</div>
+          <div>Heyyy</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
