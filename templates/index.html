@@ -61,68 +61,73 @@
       </ul>
     </nav>
 
-    <div class="root_body">
-      <div class="root_inner">
-        <div class="container">
-          <section class="container_inner">
-            <article class="intro">
-              {% if top_artists %}
-              <h1>
-                <span id="colored">Grooving to </span> <br />
-                {{ top_artists[0].Artist_name }}
-              </h1>
-              <p>
-                When it comes to your favourite artist to listen to, no one does
-                it like {{ top_artists[0].Artist_name }} for you!
-              </p>
-              {% endif %}
-            </article>
+    <main class="main_root">
+      <div class="root_body">
+        <div class="root_inner">
+          <div class="container">
+            <section class="container_inner">
+              <a class="f_name">Top artists</a>
+              <div class="intro">
+                {% if top_artists %}
+                <h1 class="intro_title">
+                  You have been <br />
+                  grooving to
+                  <span id="colored"> {{ top_artists[0].Artist_name }} </span>
+                </h1>
+                <p>
+                  When it comes to your favourite artist to listen to, <br />
+                  no one does it like {{ top_artists[0].Artist_name }} for you!
+                </p>
+                {% endif %}
+              </div>
 
-            <article class="card_container">
-              <ul class="cool-list">
-                {% for artist in top_artists %}
-                <li class="cool-list_item">
-                  <div class="card_inner">
-                    <img
-                      src="{{ artist.Artist_image }}"
-                      alt="{{ artist.Artist_name }}"
-                    />
-                    <div class="info">
-                      <h4>
-                        {% if loop.index == 1 %} Your top artist {% else %} #{{
-                        loop.index }} {% endif %}
-                      </h4>
-                      <h2>{{ artist.Artist_name }}</h2>
-                    </div>
-                    <div class="overlay">
-                      <div class="overlay_inner">
-                        <h4>Popularity:</h4>
-                        <h2>
-                          {% if artist.Popularity_group == "superstar" %}
-                          Superstar {% elif artist.Popularity_group ==
-                          "well_known" %} Well Known {% elif
-                          artist.Popularity_group == "known" %} Known {% elif
-                          artist.Popularity_group == "moderately_known" %}
-                          Moderately Known {% elif artist.Popularity_group ==
-                          "up_and_coming" %} Up and Coming {% endif %}
-                        </h2>
-                        <h4>Top Tracks:</h4>
-                        <h2>
-                          {% if artist.Top_track %} {{
-                          artist.Top_track.Track_Name}} {% else %} No top track
-                          available {% endif %}
-                        </h2>
+              <article class="card_container">
+                <ul class="cool-list">
+                  {% for artist in top_artists %}
+                  <li class="cool-list_item">
+                    <div class="card_inner">
+                      <img
+                        src="{{ artist.Artist_image }}"
+                        alt="{{ artist.Artist_name }}"
+                      />
+                      <div class="info">
+                        <h4>
+                          {% if loop.index == 1 %} Your top artist {% else %}
+                          #{{ loop.index }} {% endif %}
+                        </h4>
+                        <h2>{{ artist.Artist_name }}</h2>
+                      </div>
+                      <div class="overlay">
+                        <div class="overlay_inner">
+                          <h4>Popularity:</h4>
+                          <h2>
+                            {% if artist.Popularity_group == "superstar" %}
+                            Superstar {% elif artist.Popularity_group ==
+                            "well_known" %} Well Known {% elif
+                            artist.Popularity_group == "known" %} Known {% elif
+                            artist.Popularity_group == "moderately_known" %}
+                            Moderately Known {% elif artist.Popularity_group ==
+                            "up_and_coming" %} Up and Coming {% endif %}
+                          </h2>
+                          <h4>Top Tracks:</h4>
+                          <h2>
+                            {% if artist.Top_track %} {{
+                            artist.Top_track.Track_Name}} {% else %} No top
+                            track available {% endif %}
+                          </h2>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </li>
-                {% endfor %}
-              </ul>
-            </article>
-          </section>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </article>
+            </section>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
+
     <script>
       const signoutButton = document.getElementById('signout-btn');
       const modal = document.getElementById('signout-modal');
@@ -140,15 +145,6 @@
 
       cancelButton.addEventListener('click', () => {
         modal.style.display = 'none';
-      });
-
-      window.addEventListener('load', function () {
-        var container = document.querySelector('.cool-list');
-        var masonry = new Masonry(container, {
-          itemSelector: '.cool-list_item',
-          columnWidth: container.offsetWidth / 3, // Width of each column
-          gutter: 10, // Gap between items
-        });
       });
     </script>
   </body>

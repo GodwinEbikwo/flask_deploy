@@ -86,9 +86,12 @@ html {
   --text: #f2f2f2;
   --secondary: #1c1c1c;
   --font-size-base: 16px;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', Helvetica, Arial, sans-serif;
   --btn-color: #f294b6;
   --box-shadow: #f3d44b;
+  --page-padding: 1.5rem;
+  --page-max-width: 1200px;
+  --transparent: rgba(255, 255, 255, 0);
 }
 
 /* Responsive Fonts */
@@ -198,8 +201,20 @@ button {
   left: 2rem;
   z-index: 90;
   max-height: 50px;
-  border-radius: 50px;
-  background-color: var(--secondary);
+  outline: none;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  color: rgb(247, 248, 248);
+  backdrop-filter: blur(12px);
+  font-weight: 500;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.1);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.05);
+  border-image: initial;
+  border-radius: 999px;
 }
 
 .navbar-list {
@@ -231,19 +246,39 @@ button {
   background-position: 50%;
 }
 
-.root_body {
-  width: 100%;
-  position: relative;
-  margin: 0 auto;
+.main_root {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
   min-height: 100vh;
-  max-width: 1440px;
+}
+
+.root_body {
+  --header-height: 48px;
+  overflow-x: hidden;
+  margin-top: calc(-1 * var(--header-height));
+  padding-top: var(--header-height);
+  padding-left: var(--page-padding);
+  padding-right: var(--page-padding);
+  margin-bottom: -164px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  background: radial-gradient(
+    ellipse 80% 50% at 50% -20%,
+    rgba(120, 119, 198, 0.3),
+    var(--transparent)
+  );
 }
 
 .root_inner {
-  display: flex;
-  flex-direction: column;
-  margin-top: 4rem;
-  padding: 0 2rem;
+  padding-left: var(--page-padding);
+  padding-right: var(--page-padding);
+  max-width: var(--page-max-width);
+  width: 100%;
+  margin: 0px auto;
 }
 
 .login_container {
@@ -266,37 +301,87 @@ button {
 
 /* Responsive Divs */
 .container {
-  max-width: 100%;
-  width: 100%;
-  margin: 0 auto;
+  display: flex;
+  flex: initial;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
 }
 
 .container_inner {
-  margin-top: 2rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  margin-top: 6rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.intro {
+.f_name {
+  outline: none;
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
-  margin-top: 6rem;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 28px;
+  color: rgb(247, 248, 248);
+  backdrop-filter: blur(12px);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 28px;
+  white-space: nowrap;
+  padding: 0px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.05);
+  border-image: initial;
+  border-radius: 999px;
 }
 
 #colored {
   color: #54ef59;
 }
 
-.intro h1 {
-  font-size: 4rem;
+.intro {
+  position: relative;
+  display: flex;
+  flex: initial;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  /* margin-bottom: 3rem; */
+
+  padding-left: var(--page-padding-left);
+  padding-right: var(--page-padding-right);
+  max-width: var(--page-max-width);
+  width: 100%;
+  margin: 0px auto;
+}
+
+.intro_title {
+  text-align: center;
+  font-size: 3rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
   font-weight: 600;
-  margin-bottom: 0.4rem;
-  line-height: 1.2;
+  margin: 24px 0px;
 }
 
 .intro p {
-  margin-bottom: 0.4rem;
-  max-width: 280px;
+  color: rgb(180, 188, 208);
+  text-align: center;
+  margin: 0px 0px 48px;
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+@media (max-width: 768px) {
+  .intro_title {
+    font-size: 2rem;
+    letter-spacing: -0.01em;
+  }
+  .intro p {
+    font-size: 16px;
+  }
 }
 
 /* modal styles */
@@ -356,11 +441,7 @@ button {
 }
 
 .logout {
-  color: var(--text);
-}
-
-button {
-  margin: 5px;
+  margin-top: 0.3em;
 }
 
 /* Responsive Styling */
@@ -384,11 +465,15 @@ button {
 
 .cool-list {
   list-style: none;
-  padding: 0;
-  margin: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   grid-gap: 10px;
+}
+
+@media (min-width: 600px) {
+  .cool-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .cool-list li {
@@ -396,9 +481,9 @@ button {
   margin-bottom: 0.4rem;
 }
 
-.cool-list li:nth-child(2n + 1) {
+/* .cool-list li:nth-child(2n + 1) {
   transform: translateY(-40px);
-}
+} */
 
 .card_inner {
   position: relative;
