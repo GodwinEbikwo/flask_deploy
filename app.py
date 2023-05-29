@@ -41,7 +41,7 @@ def get_access_token():
         return session["access_token"]
 
     try:
-        token_info = sp_oauth.validate_token(sp_oauth.cache_handler.get_cached_token())
+        token_info = sp_oauth.get_cached_token()
         if token_info is None:
             # No cached token found, obtain a new one
             auth_url = sp_oauth.get_authorize_url()
