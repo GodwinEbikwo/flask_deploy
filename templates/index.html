@@ -18,18 +18,129 @@
   <body>
     <nav class="navbar">
       <ul class="navbar-list">
-        <li class="navbar-item">{{ display_name }}</li>
-        <li class="navbar-item">Picture</li>
-        <li class="navbar-item">Logout</li>
+        <div class="navbar-item">{{ user.display_name }}</div>
+        <div class="nav-img__container">
+          {% if user.profile_image %}
+          <img
+            id="profile-image"
+            src="{{ user.profile_image }}"
+            alt="Profile Image"
+          />
+          {% endif %}
+        </div>
+
+        <button id="signout-btn" class="logout">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M8.625 2.5C8.625 3.12132 8.12132 3.625 7.5 3.625C6.87868 3.625 6.375 3.12132 6.375 2.5C6.375 1.87868 6.87868 1.375 7.5 1.375C8.12132 1.375 8.625 1.87868 8.625 2.5ZM8.625 7.5C8.625 8.12132 8.12132 8.625 7.5 8.625C6.87868 8.625 6.375 8.12132 6.375 7.5C6.375 6.87868 6.87868 6.375 7.5 6.375C8.12132 6.375 8.625 6.87868 8.625 7.5ZM7.5 13.625C8.12132 13.625 8.625 13.1213 8.625 12.5C8.625 11.8787 8.12132 11.375 7.5 11.375C6.87868 11.375 6.375 11.8787 6.375 12.5C6.375 13.1213 6.87868 13.625 7.5 13.625Z"
+              fill="#fff"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+
+        <div id="signout-modal" class="modal">
+          <div class="modal-content">
+            <h4>Sign Out Confirmation</h4>
+            <p>Are you sure you want to sign out?</p>
+            <div class="modal-buttons">
+              <form action="/logout" method="POST">
+                <button id="confirm-signout" class="btn">Yes</button>
+              </form>
+              <button id="cancel-signout" class="btn">No</button>
+            </div>
+          </div>
+        </div>
       </ul>
     </nav>
+
     <div class="root_body">
       <div class="root_inner">
         <div class="container">
-          <div>Hello World</div>
-          <div>Heyyy</div>
+          <section class="container_inner">
+            <article class="word">
+              {% if top_artists %}
+              <h1>
+                <span id="colored">Vibing to </span> <br />
+                {{ top_artists[0].Artist_name }}
+              </h1>
+              <p>
+                When it comes to your favourite artist to listen to, no one does
+                it like {{ top_artists[0].Artist_name }} for you!
+              </p>
+              {% endif %}
+            </article>
+
+            <article class="card_container">
+              <ul class="cool-list">
+                {% for artist in top_artists %}
+                <li>
+                  <div class="card_inner">
+                    <img
+                      src="{{ artist.Artist_image }}"
+                      alt="{{ artist.Artist_name }}"
+                    />
+                    <div class="info">
+                      <h4>
+                        {% if loop.index == 1 %} Your top artist {% else %} #{{
+                        loop.index }} {% endif %}
+                      </h4>
+                      <h2>{{ artist.Artist_name }}</h2>
+                    </div>
+                    <div class="overlay">
+                      <div class="overlay_inner">
+                        <h4>Popularity:</h4>
+                        <h2>
+                          {% if artist.Popularity_group == "superstar" %}
+                          Superstar {% elif artist.Popularity_group ==
+                          "well_known" %} Well Known {% elif
+                          artist.Popularity_group == "known" %} Known {% elif
+                          artist.Popularity_group == "moderately_known" %}
+                          Moderately Known {% elif artist.Popularity_group ==
+                          "up_and_coming" %} Up and Coming {% endif %}
+                        </h2>
+                        <h4>Top Tracks:</h4>
+                        <h2>
+                          {% if artist.Top_track %} {{
+                          artist.Top_track.Track_Name}} {% else %} No top track
+                          available {% endif %}
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+            </article>
+          </section>
         </div>
       </div>
     </div>
+    <script>
+      const signoutButton = document.getElementById('signout-btn');
+      const modal = document.getElementById('signout-modal');
+      const confirmButton = document.getElementById('confirm-signout');
+      const cancelButton = document.getElementById('cancel-signout');
+
+      signoutButton.addEventListener('click', () => {
+        modal.style.display = 'block';
+      });
+
+      confirmButton.addEventListener('click', () => {
+        // Perform sign out action here
+        modal.style.display = 'none';
+      });
+
+      cancelButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+      });
+    </script>
   </body>
 </html>
