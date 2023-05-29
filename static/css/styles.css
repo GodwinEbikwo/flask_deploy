@@ -69,14 +69,15 @@ td {
 }
 
 /* Global Box Sizing */
-html {
-  box-sizing: border-box;
-}
 
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--bg);
 }
 
 /* CSS Variables */
@@ -274,6 +275,28 @@ button {
   margin-top: 2rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6rem;
+}
+
+#colored {
+  color: #54ef59;
+}
+
+.intro h1 {
+  font-size: 4rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  line-height: 1.2;
+}
+
+.intro p {
+  margin-bottom: 0.4rem;
+  max-width: 280px;
 }
 
 /* modal styles */

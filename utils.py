@@ -7,8 +7,6 @@ from flask import session
 # load the env file
 load_dotenv()
 
-# Determine the current environment
-env = os.getenv("FLASK_ENV", "development")
 
 # Determine the parent directory
 parent_directory = os.path.expanduser("~/Desktop/flask_deploy")
@@ -25,12 +23,7 @@ client_secret = os.getenv("CLIENT_SECRET")
 # Scope for the required permissions
 scope = "user-library-read user-top-read user-read-recently-played"
 
-
-# Set the redirect URI based on the environment
-if env == "development":
-    redirect_uri = "http://localhost:5000/callback"
-else:
-    redirect_uri = "https://spotifyanalytics.onrender.com/callback"
+redirect_uri = "https://spotifyanalytics.onrender.com/callback"
 
 # Create SpotifyOAuth instance
 sp_oauth = SpotifyOAuth(

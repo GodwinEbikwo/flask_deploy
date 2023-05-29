@@ -3,7 +3,7 @@
   <head>
     <title>Spotify_analytics</title>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/styles.css') }}"
@@ -65,10 +65,10 @@
       <div class="root_inner">
         <div class="container">
           <section class="container_inner">
-            <article class="word">
+            <article class="intro">
               {% if top_artists %}
               <h1>
-                <span id="colored">Vibing to </span> <br />
+                <span id="colored">Grooving to </span> <br />
                 {{ top_artists[0].Artist_name }}
               </h1>
               <p>
@@ -81,7 +81,7 @@
             <article class="card_container">
               <ul class="cool-list">
                 {% for artist in top_artists %}
-                <li>
+                <li class="cool-list_item">
                   <div class="card_inner">
                     <img
                       src="{{ artist.Artist_image }}"
@@ -140,6 +140,15 @@
 
       cancelButton.addEventListener('click', () => {
         modal.style.display = 'none';
+      });
+
+      window.addEventListener('load', function () {
+        var container = document.querySelector('.cool-list');
+        var masonry = new Masonry(container, {
+          itemSelector: '.cool-list_item',
+          columnWidth: container.offsetWidth / 3, // Width of each column
+          gutter: 10, // Gap between items
+        });
       });
     </script>
   </body>
