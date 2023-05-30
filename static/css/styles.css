@@ -86,7 +86,6 @@ html {
   --text: #f2f2f2;
   --secondary: #1c1c1c;
   --font-size-base: 16px;
-  --font-body: 'Inter', Helvetica, Arial, sans-serif;
   --btn-color: #f294b6;
   --box-shadow: #f3d44b;
   --page-padding: 1.5rem;
@@ -98,7 +97,7 @@ html {
 body {
   color: var(--text);
   background-color: var(--bg);
-  font-family: var(--font-body);
+  font-family: 'Inter', Helvetica, Arial, sans-serif;
   font-size: var(--font-size-base);
 }
 
@@ -162,6 +161,11 @@ button {
   cursor: pointer;
 }
 
+ul,
+li {
+  list-style: none;
+}
+
 .btn {
   width: auto;
   max-width: 100%;
@@ -199,22 +203,21 @@ button {
   position: fixed;
   top: 1.2rem;
   left: 2rem;
+  color: var(--text);
   z-index: 90;
+  font-weight: 500;
   max-height: 50px;
   outline: none;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
-  color: rgb(247, 248, 248);
-  backdrop-filter: blur(12px);
-  font-weight: 500;
-  white-space: nowrap;
+  /* backdrop-filter: blur(12px);
   background: rgba(255, 255, 255, 0.1);
   border-width: 1px;
   border-style: solid;
   border-color: rgba(255, 255, 255, 0.05);
   border-image: initial;
-  border-radius: 999px;
+  border-radius: 999px; */
 }
 
 .navbar-list {
@@ -229,6 +232,8 @@ button {
   font-weight: 600;
   margin-right: 1rem;
   letter-spacing: -0.011em;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .nav-img__container {
@@ -267,10 +272,17 @@ button {
   -webkit-box-pack: center;
   justify-content: center;
   background: radial-gradient(
-    ellipse 80% 50% at 50% -20%,
-    rgba(120, 119, 198, 0.3),
+    ellipse 80% 50% at 50% -10%,
+    rgba(119, 198, 131, 0.3),
     var(--transparent)
   );
+
+  /* background: radial-gradient(
+    ellipse at center,
+    rgba(119, 198, 131, 0.6),
+    rgba(119, 198, 131, 0.3),
+    var(--transparent)
+  ); */
 }
 
 .root_inner {
@@ -309,10 +321,10 @@ button {
 }
 
 .container_inner {
-  margin-top: 6rem;
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding-top: 6rem;
 }
 
 .f_name {
@@ -335,6 +347,7 @@ button {
   border-color: rgba(255, 255, 255, 0.05);
   border-image: initial;
   border-radius: 999px;
+  text-transform: capitalize;
 }
 
 #colored {
@@ -367,11 +380,12 @@ button {
 }
 
 .intro p {
-  color: rgb(180, 188, 208);
+  color: rgb(180, 208, 180);
   text-align: center;
-  margin: 0px 0px 48px;
-  font-size: 22px;
+  margin: 0px 0px 38px;
+  font-size: 20px;
   line-height: 1.3;
+  letter-spacing: -0.03em;
 }
 
 @media (max-width: 768px) {
@@ -388,7 +402,7 @@ button {
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   left: 0;
   top: 0;
   width: 100%;
@@ -561,4 +575,75 @@ button {
 
 .card_inner:hover .overlay {
   opacity: 1;
+}
+
+/* nowplaying card */
+.now-playing {
+  position: fixed;
+  top: 1.2rem;
+  right: 2rem;
+  z-index: 90;
+  max-height: 50px;
+  outline: none;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  color: rgb(247, 248, 248);
+  backdrop-filter: blur(12px);
+  font-weight: 500;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.1);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.05);
+  border-image: initial;
+  border-radius: 999px;
+}
+
+.now-playing_inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 7px 1rem;
+}
+
+.now-playing_item {
+  color: var(--text);
+  font-weight: 600;
+  margin-right: 1rem;
+  letter-spacing: -0.011em;
+  text-decoration: none;
+}
+
+.now-playing_img {
+  width: 28px;
+  height: 28px;
+  margin-right: 0.5rem;
+}
+
+.now-playing_img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  background-size: cover;
+  background-position: 50%;
+}
+
+.logo {
+  width: 1.2rem;
+  margin-left: auto;
+  margin-top: 0rem;
+  height: 1.2rem;
+  display: block;
+  overflow: hidden;
+}
+
+/* .uppercase {
+  text-transform: uppercase;
+} */
+
+.form_ {
+  margin-bottom: 38px;
 }

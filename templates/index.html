@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Spotify_analytics</title>
+    <title>{{user.display_name}} spotify stats</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,6 +19,7 @@
     <nav class="navbar">
       <ul class="navbar-list">
         <div class="navbar-item">{{ user.display_name }}</div>
+
         <div class="nav-img__container">
           {% if user.profile_image %}
           <img
@@ -61,18 +62,53 @@
       </ul>
     </nav>
 
+    {% if track_info %}
+    <div class="now-playing">
+      <div class="now-playing_inner">
+        <a
+          class="now-playing_item"
+          target="_blank"
+          href="{{ song_url}}"
+          aria-label="navigating to an artists spotify page"
+        >
+          {{ track_info.track_name }}
+        </a>
+
+        <div class="now-playing_img">
+          <img
+            src="{{ track_info.album_image_url }}"
+            alt="{{ track_info.name }}"
+          />
+        </div>
+
+        <svg class="logo" viewBox="0 0 168 168">
+          <path
+            fill="#1ED760"
+            d="M83.996.277C37.747.277.253 37.77.253 84.019c0 46.251 37.494 83.741 83.743 83.741 46.254 0 83.744-37.49 83.744-83.741 0-46.246-37.49-83.738-83.745-83.738l.001-.004zm38.404 120.78a5.217 5.217 0 01-7.18 1.73c-19.662-12.01-44.414-14.73-73.564-8.07a5.222 5.222 0 01-6.249-3.93 5.213 5.213 0 013.926-6.25c31.9-7.291 59.263-4.15 81.337 9.34 2.46 1.51 3.24 4.72 1.73 7.18zm10.25-22.805c-1.89 3.075-5.91 4.045-8.98 2.155-22.51-13.839-56.823-17.846-83.448-9.764-3.453 1.043-7.1-.903-8.148-4.35a6.538 6.538 0 014.354-8.143c30.413-9.228 68.222-4.758 94.072 11.127 3.07 1.89 4.04 5.91 2.15 8.976v-.001zm.88-23.744c-26.99-16.031-71.52-17.505-97.289-9.684-4.138 1.255-8.514-1.081-9.768-5.219a7.835 7.835 0 015.221-9.771c29.581-8.98 78.756-7.245 109.83 11.202a7.823 7.823 0 012.74 10.733c-2.2 3.722-7.02 4.949-10.73 2.739z"
+          />
+        </svg>
+      </div>
+    </div>
+    {% else %}
+    <div class="now-playing">
+      <div class="now-playing_inner">
+        <p>No track currently playing</p>
+      </div>
+    </div>
+    {% endif %}
+
     <main class="main_root">
       <div class="root_body">
         <div class="root_inner">
           <div class="container">
             <section class="container_inner">
-              <a class="f_name">Top artists</a>
+              <a class="f_name">top artists</a>
               <div class="intro">
                 {% if top_artists %}
                 <h1 class="intro_title">
                   You have been <br />
                   grooving to
-                  <span id="colored"> {{ top_artists[0].Artist_name }} </span>
+                  <span id="colored">{{ top_artists[0].Artist_name }}</span>
                 </h1>
                 <p>
                   When it comes to your favourite artist to listen to, <br />
@@ -91,7 +127,7 @@
                         alt="{{ artist.Artist_name }}"
                       />
                       <div class="info">
-                        <h4>
+                        <h4 class="uppercase">
                           {% if loop.index == 1 %} Your top artist {% else %}
                           #{{ loop.index }} {% endif %}
                         </h4>
@@ -123,10 +159,83 @@
                 </ul>
               </article>
             </section>
+          
+
+            <section class="container_inner">
+              <a class="f_name">top tracks</a>
+              <div class="intro">
+                {% if top_track %}
+                  <h1 class="intro_title">
+                    {% if time_range == 'short_term' %}
+                        <span id="colored">{{ top_track[0]['Artists'] }}</span> has been on repeat
+                      {% elif time_range == 'medium_term' %}
+                        <span id="colored">{{ top_track[0]['Artists'] }}</span> was a bop, 30 days ago
+                      {% elif time_range == 'long_term' %}
+                        <span id="colored">{{ top_track[0]['Artists'] }}</span> is a favorite!
+                    {% endif %}
+                  </h1>
+                  <p>
+                    Although to vibe to other songs, <br />
+                    {{ top_track[0]['Track_Name'] }} just hit differents by {{ top_track[0]['Artists'] }} 
+                  </p>
+                {% endif %}
+              </div>
+              
+              <form class="form_" id="top-tracks-form" method="POST" action="/">
+                <!-- <label for="limit">Limit:</label> -->
+                <!-- <input type="number" name="limit" id="limit" min="1" max="10" value="{{ limit }}"> -->
+                <label for="time-range">Time Range</label>
+                <select name="time-range" id="time-range">
+                  <option value="short_term" {% if time_range == 'short_term' %}selected{% endif %}>Past week</option>
+                  <option value="medium_term" {% if time_range == 'medium_term' %}selected{% endif %}>30 days</option>
+                  <option value="long_term" {% if time_range == 'long_term' %}selected{% endif %}>6 months</option>
+                </select>
+               <button type="submit" style="display: none;">Submit</button>
+             </form>
+
+              <div class="card_container">
+                <ul class="cool-list">
+                  {% for track in top_track %}
+                  <li class="cool-list_item">
+                    <div class="card_inner">
+                      <img src="{{ track.Album_Image }}" alt="{{ track['Track_Name'] }}" />
+                      <div class="info">
+                        <h4 class="uppercase">
+                          {% if loop.index == 1 %} Your top track {% else %} #{{ loop.index
+                          }} {% endif %}
+                        </h4>
+                        <h2> {{ track['Track_Name'] }} - {{ track['Artists'] }} </h2>
+                      </div>
+                    </div>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </section>
           </div>
         </div>
       </div>
     </main>
+
+    <script>
+      window.addEventListener('load', function() {
+        var scrollPosition = sessionStorage.getItem('scrollPosition');
+        if (scrollPosition !== null) {
+          window.scrollTo(0, scrollPosition);
+        }
+      });
+
+      window.addEventListener('beforeunload', function() {
+        sessionStorage.setItem('scrollPosition', window.pageYOffset);
+      });
+
+      <!-- document.getElementById('limit').addEventListener('change', submitForm); -->
+      document.getElementById('time-range').addEventListener('change', submitForm);
+
+      function submitForm() {
+        document.getElementById('top-tracks-form').submit();
+      }
+    </script>
 
     <script>
       const signoutButton = document.getElementById('signout-btn');
@@ -139,7 +248,6 @@
       });
 
       confirmButton.addEventListener('click', () => {
-        // Perform sign out action here
         modal.style.display = 'none';
       });
 
