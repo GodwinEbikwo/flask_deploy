@@ -97,7 +97,8 @@ html {
 body {
   color: var(--text);
   background-color: var(--bg);
-  font-family: 'Inter', Helvetica, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, 'Helvetica Neue', Helvetica, system-ui,
+    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Open Sans', sans-serif;
   font-size: var(--font-size-base);
 }
 
