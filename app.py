@@ -35,6 +35,28 @@ sp_oauth = SpotifyOAuth(
 
 
 # get the access token
+# def get_access_token():
+#     if "access_token" in session:
+#         return session["access_token"]
+
+#     try:
+#         token_info = sp_oauth.get_cached_token()
+#         if token_info is None:
+#             # No cached token found, obtain a new one
+#             auth_url = sp_oauth.get_authorize_url()
+#             return f'<p>Please <a href="{auth_url}">authorize</a> the application.</p>'
+
+#         access_token = token_info["access_token"]
+#         session["access_token"] = access_token  # Store access token in the session
+
+#         return access_token
+
+#     except spotipy.SpotifyException as e:
+#         error_message = "An error occurred while retrieving the access token."
+#         print(f"Exception: {str(e)}")
+#         return error_message
+
+
 def get_access_token():
     if "access_token" in session:
         return session["access_token"]
@@ -47,7 +69,15 @@ def get_access_token():
             return f'<p>Please <a href="{auth_url}">authorize</a> the application.</p>'
 
         access_token = token_info["access_token"]
-        session["access_token"] = access_token  # Store access token in the session
+
+        # Generate a unique session key for each user
+        session_key = f"access_token_{secrets.token_hex(16)}"
+        print(session_key)
+
+        session[session_key] = access_token  # Store access token in the session
+        session[
+            "access_token_key"
+        ] = session_key  # Store the session key in a separate variable
 
         return access_token
 
@@ -212,7 +242,7 @@ def callback():
 @app.route("/", methods=["GET", "POST"])
 def index():
     token_info = session.get("token_info")
-    if not token_info or token_info["expires_at"] < datetime.now().timestamp():
+    if not token_info or token_info["expires_in"] < datetime.now().timestamp():
         return redirect("/login")
 
     user = userProfile()
